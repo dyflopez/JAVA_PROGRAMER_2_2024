@@ -121,4 +121,85 @@ public interface ProductDoc {
     @PutMapping("/{id}")
     ResponseEntity<?> update(@RequestBody ProductDTO productDTO,@PathVariable long id);
 
+
+    @Operation(
+            summary = "get a  Product by name",
+            description = "This operation is for delete a product on database"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse (
+                            responseCode = "200",
+                            description = "list all products",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+                    ),
+                    @ApiResponse (
+                            responseCode = "404",
+                            description = "not found",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+                    ),
+                    @ApiResponse (
+                            responseCode = "500",
+                            description = "internal server Error",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+                    )
+            }
+    )
+    @GetMapping("/name")
+    ResponseEntity<?> getByName(@RequestParam String name);
+
+
+    @Operation(
+            summary = "get a  Product by name",
+            description = "This operation is for delete a product on database"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse (
+                            responseCode = "200",
+                            description = "list all products",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+                    ),
+                    @ApiResponse (
+                            responseCode = "404",
+                            description = "not found",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+                    ),
+                    @ApiResponse (
+                            responseCode = "500",
+                            description = "internal server Error",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+                    )
+            }
+    )
+    @GetMapping("/name/v2")
+    ResponseEntity<?> getByNameVersion2(@RequestParam String name);
+
+
+    @Operation(
+            summary = "get a  Product by name and stock",
+            description = "This operation is for find  a product on database  by name and stock"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse (
+                            responseCode = "200",
+                            description = "list all products",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+                    ),
+                    @ApiResponse (
+                            responseCode = "404",
+                            description = "not found",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+                    ),
+                    @ApiResponse (
+                            responseCode = "500",
+                            description = "internal server Error",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE)
+                    )
+            }
+    )
+    @GetMapping("/name-stock")
+    ResponseEntity<?> getByNameStock(@RequestParam String name ,@RequestParam int stock);
+
 }

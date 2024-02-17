@@ -33,4 +33,19 @@ public class ProductController implements ProductDoc {
     public ResponseEntity<?> update(ProductDTO productDTO,long id) {
         return this.iProductService.update(productDTO,id);
     }
+
+    @Override
+    public ResponseEntity<?> getByName(String name) {
+        return this.iProductService.getByName(name);
+    }
+
+    @Override
+    public ResponseEntity<?> getByNameVersion2(String name) {
+        return this.iProductService.getByName(name);
+    }
+
+    @Override
+    public ResponseEntity<?> getByNameStock(String name, int stock) {
+        return this.iProductService.getByNameAndStock(name,stock);
+    }
 }

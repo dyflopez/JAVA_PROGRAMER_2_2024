@@ -14,4 +14,11 @@ public interface IProductService {
 
     ResponseEntity update(ProductDTO productDTO , long id);
 
+
+    ResponseEntity getByName(String name);
+
+    ResponseEntity getByNameVersion2(String name);
+
+    ResponseEntity getByNameAndStock(String name,int stock);
+
 }

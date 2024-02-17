@@ -72,4 +72,32 @@ public class ProductServiceImpl implements IProductService {
                 .status(HttpStatus.NOT_FOUND)
                 .build();
     }
+
+    @Override
+    public ResponseEntity getByName(String name) {
+
+        ProductEntity  productEntity =  this.productRepository
+                .findByName(name)
+                .orElse(new ProductEntity());
+
+        return ResponseEntity.ok(productEntity);
+    }
+
+    @Override
+    public ResponseEntity getByNameVersion2(String name) {
+
+        return this.productRepository
+                .findByName(name)
+                .map(ResponseEntity::ok)
+                .orElseGet(()->ResponseEntity.notFound().build());
+
+    }
+
+    @Override
+    public ResponseEntity getByNameAndStock(String name, int stock) {
+        return this.productRepository
+                .findByNameAndStockGreaterThan(name,stock)
+                .map(ResponseEntity::ok)
+                .orElseGet(()->ResponseEntity.notFound().build());
+    }
 }
