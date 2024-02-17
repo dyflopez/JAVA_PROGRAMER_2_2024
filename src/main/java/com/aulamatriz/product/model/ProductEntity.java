@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -24,7 +25,7 @@ public class ProductEntity {
     private String description;
 
     @Column(precision = 10, scale = 2)
-    private double price;
+    private BigDecimal price;
 
     private int stock;
 
