@@ -1,6 +1,7 @@
 package com.aulamatriz.product.service.impl;
 
 import com.aulamatriz.product.dto.ProductDTO;
+import com.aulamatriz.product.exception.MyHandleException;
 import com.aulamatriz.product.model.ProductEntity;
 import com.aulamatriz.product.repository.ProductRepository;
 import com.aulamatriz.product.service.IProductService;
@@ -20,6 +21,12 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ResponseEntity save(ProductDTO productDTO) {
+
+        var productExist = this.productRepository.findByName(productDTO.getName());
+
+        if(productExist.isPresent()){
+            throw new MyHandleException("product with name " + productDTO.getName() + " now exists  in database");
+        }
 
         ProductEntity productEntity = new ProductEntity();
 
@@ -78,7 +85,9 @@ public class ProductServiceImpl implements IProductService {
 
         ProductEntity  productEntity =  this.productRepository
                 .findByName(name)
-                .orElse(new ProductEntity());
+                .orElseThrow(()-> new MyHandleException("""
+                        Product with name %s does not exist in database
+                        """.formatted(name)));
 
         return ResponseEntity.ok(productEntity);
     }
