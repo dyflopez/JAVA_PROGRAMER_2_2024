@@ -7,4 +7,11 @@ public interface IProductService {
 
     ResponseEntity save(ProductDTO productDTO);
 
+    ResponseEntity getAll();
+
+    ResponseEntity deleteById(long id);
+
+
+    ResponseEntity update(ProductDTO productDTO , long id);
+
 }
