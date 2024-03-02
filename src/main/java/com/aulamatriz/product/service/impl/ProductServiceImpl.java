@@ -2,10 +2,12 @@ package com.aulamatriz.product.service.impl;
 
 import com.aulamatriz.product.dto.ProductDTO;
 import com.aulamatriz.product.exception.MyHandleException;
+import com.aulamatriz.product.mapper.ProductMapper;
 import com.aulamatriz.product.model.ProductEntity;
 import com.aulamatriz.product.repository.ProductRepository;
 import com.aulamatriz.product.service.IProductService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class ProductServiceImpl implements IProductService {
@@ -22,22 +25,24 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ResponseEntity save(ProductDTO productDTO) {
 
+        var trackingId = productDTO.getTrackingId();
+
+        log.info("getting product {}",trackingId);
         var productExist = this.productRepository.findByName(productDTO.getName());
 
+        log.info("validate  if exist product {}",trackingId);
         if(productExist.isPresent()){
+            log.info("product already exist");
             throw new MyHandleException("product with name " + productDTO.getName() + " now exists  in database");
         }
 
-        ProductEntity productEntity = new ProductEntity();
+        log.info("mapping entity product {}",trackingId);
+        ProductEntity productEntity = ProductMapper.maoToEntity(productDTO);
 
-        productEntity.setName(productDTO.getName());
-        productEntity.setStock(productDTO.getStock());
-        productEntity.setPrice(productDTO.getPrice());
-        productEntity.setDescription(productDTO. getDescription());
-        productEntity.setCreatedAt(LocalDateTime.now());
-
+        log.info("saving  product {}",trackingId);
         var newProduct = this.productRepository.save(productEntity);
 
+        log.info("created product {}",trackingId);
         return ResponseEntity.status(HttpStatus.CREATED).body(newProduct);
     }
 
@@ -50,12 +55,15 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ResponseEntity deleteById(long id) {
 
+        log.warn("deleting product by id" + id);
         this.productRepository.deleteById(id);
         return ResponseEntity.ok("product was deleted");
     }
 
     @Override
     public ResponseEntity update(ProductDTO productDTO, long id) {
+
+        log.warn("getting product by id" + id);
 
         Optional<ProductEntity> optionalProductEntity = this.productRepository.findById(id);
 

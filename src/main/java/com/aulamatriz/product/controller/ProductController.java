@@ -4,10 +4,11 @@ import com.aulamatriz.product.controller.doc.ProductDoc;
 import com.aulamatriz.product.dto.ProductDTO;
 import com.aulamatriz.product.service.IProductService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-
+@Slf4j
 @AllArgsConstructor
 @RestController
 public class ProductController implements ProductDoc {
@@ -16,6 +17,7 @@ public class ProductController implements ProductDoc {
 
     @Override
     public ResponseEntity<?> createProduct(ProductDTO productDTO) {
+        log.info("creating Product {}",productDTO);
         return this.iProductService.save(productDTO);
     }
 
